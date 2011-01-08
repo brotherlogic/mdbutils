@@ -21,19 +21,21 @@ public class NumberChecker
       NumberChecker checker = new NumberChecker();
 
       if (args[0].equalsIgnoreCase("simon"))
+      {
          if (args[1].equals("12"))
             checker.checkNumbers("12", User.getUser("Simon"), 16 * TWELVES);
          else if (args[1].equals("CD"))
             checker.checkNumbers("CD", User.getUser("Simon"), CDS);
          else if (args[1].equals("7"))
             checker.checkNumbers("7", User.getUser("Simon"), SEVENS);
-         else if (args[0].equalsIgnoreCase("jeanette"))
-            if (args[1].equals("12"))
-               checker.checkNumbers("12", User.getUser("Jeanette"), 9 * TWELVES);
-            else if (args[1].equals("CD"))
-               checker.checkNumbers("CD", User.getUser("Simon"), CDS);
-            else if (args[1].equals("7"))
-               checker.checkNumbers("7", User.getUser("Simon"), 2 * SEVENS);
+      }
+      else if (args[0].equalsIgnoreCase("jeanette"))
+         if (args[1].equals("12"))
+            checker.checkNumbers("12", User.getUser("Jeanette"), 9 * TWELVES);
+         else if (args[1].equals("CD"))
+            checker.checkNumbers("CD", User.getUser("Simon"), CDS);
+         else if (args[1].equals("7"))
+            checker.checkNumbers("7", User.getUser("Simon"), 2 * SEVENS);
    }
 
    List<Record> allRecords = null;
