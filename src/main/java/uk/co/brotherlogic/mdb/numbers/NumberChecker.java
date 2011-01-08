@@ -14,7 +14,7 @@ public class NumberChecker
 {
    public static void main(String[] args) throws SQLException
    {
-      final int TWELVES = 75;
+      final int TWELVES = 76;
       final int CDS = 1200;
       final int SEVENS = 700;
 
