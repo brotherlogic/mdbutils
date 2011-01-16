@@ -92,8 +92,8 @@ public class Alarm
       try
       {
          System.err.println(command);
-         Process p = Runtime.getRuntime().exec(command, new String[]
-         { arg });
+         Process p = Runtime.getRuntime().exec(new String[]
+         { command, arg });
          BufferedReader reader = new BufferedReader(new InputStreamReader(p.getInputStream()));
          for (String line = reader.readLine(); line != null; line = reader.readLine())
             System.err.println("LINE = " + line);
