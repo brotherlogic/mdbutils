@@ -99,7 +99,6 @@ public class Alarm
       if (toPlay != null)
          try
          {
-            System.err.println(command);
             Process p = Runtime.getRuntime().exec(new String[]
             { command, toPlay.getAbsolutePath() });
             BufferedReader reader = new BufferedReader(new InputStreamReader(p.getInputStream()));
