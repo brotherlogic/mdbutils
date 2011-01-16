@@ -17,6 +17,7 @@ import uk.co.brotherlogic.mdb.record.Record;
 import de.umass.lastfm.Authenticator;
 import de.umass.lastfm.Session;
 import de.umass.lastfm.Track;
+import de.umass.lastfm.scrobble.ScrobbleResult;
 
 public class Alarm
 {
@@ -102,7 +103,9 @@ public class Alarm
             { command, toPlay.getAbsolutePath() });
             BufferedReader reader = new BufferedReader(new InputStreamReader(p.getInputStream()));
             for (String line = reader.readLine(); line != null; line = reader.readLine())
-               System.out.println(line);
+            {
+               // Do Nothign
+            }
          }
          catch (IOException e)
          {
@@ -115,8 +118,10 @@ public class Alarm
    {
       if (cSession == null)
          cSession = Authenticator.getMobileSession(user, password, secret, key);
-      Track.updateNowPlaying(s.r.getFormTrackArtist(s.cdTrack), s.r.getFormTrackTitle(s.cdTrack),
-            cSession);
+      int now = (int) (System.currentTimeMillis() / 1000);
+      ScrobbleResult result = Track.scrobble(s.r.getFormTrackArtist(s.cdTrack),
+            s.r.getFormTrackTitle(s.cdTrack), now, cSession);
+      System.err.println(result);
    }
 
    public void run()
