@@ -1,6 +1,7 @@
 package uk.co.brotherlogic.mdb.alarm;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -88,20 +89,25 @@ public class Alarm
    private void playSong(Song s)
    {
       String command = "mplayer";
-      String arg = s.r.getRiploc() + "/" + s.getResolveTrack() + "*\"";
-      try
-      {
-         System.err.println(command);
-         Process p = Runtime.getRuntime().exec(new String[]
-         { command, arg });
-         BufferedReader reader = new BufferedReader(new InputStreamReader(p.getInputStream()));
-         for (String line = reader.readLine(); line != null; line = reader.readLine())
-            System.err.println("LINE = " + line);
-      }
-      catch (IOException e)
-      {
-         e.printStackTrace();
-      }
+      File toPlay = null;
+      for (File f : new File(s.r.getRiploc()).listFiles())
+         if (f.getName().contains(s.getResolveTrack()))
+            toPlay = f;
+
+      if (toPlay != null)
+         try
+         {
+            System.err.println(command);
+            Process p = Runtime.getRuntime().exec(new String[]
+            { command, toPlay.getAbsolutePath() });
+            BufferedReader reader = new BufferedReader(new InputStreamReader(p.getInputStream()));
+            for (String line = reader.readLine(); line != null; line = reader.readLine())
+               System.err.println("LINE = " + line);
+         }
+         catch (IOException e)
+         {
+            e.printStackTrace();
+         }
 
    }
 
