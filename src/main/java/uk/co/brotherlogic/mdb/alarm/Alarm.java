@@ -56,14 +56,14 @@ public class Alarm
    {
       System.err.print("Getting Records");
       records = new LinkedList<Record>();
-      Collection<Integer> recordNumbers = GetRecords.create().getRecordNumbers();
-      for (Integer num : recordNumbers)
+      Collection<Record> recs = GetRecords.create().getRecords(GetRecords.SHELVED, "CD");
+      for (Record r : recs)
       {
-         Record r = GetRecords.create().getRecord(num);
          boolean acceptable = false;
-         for (User user : User.getUsers())
-            if (r.getScore(user) >= minScore)
-               acceptable = true;
+         if ((r.getRiploc() != null) && (r.getRiploc().trim().length() > 0))
+            for (User user : User.getUsers())
+               if (r.getScore(user) >= minScore)
+                  acceptable = true;
          if (acceptable)
             records.add(r);
       }
@@ -73,7 +73,7 @@ public class Alarm
 
    private Song pickSong() throws SQLException
    {
-      System.err.print("Picking Song");
+      System.err.println("Picking Song");
       if (records == null)
          getRecords();
       Record r = records.get(pointer++);
