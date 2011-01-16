@@ -22,6 +22,12 @@
       <version>0.5.29</version>
       <artifactId>mdbcore</artifactId>
     </dependency>
+    
+    <dependency>
+      <groupId>lastfm</groupId>
+      <version>0.1</version>
+      <artifactId>lastfm</artifactId>
+    </dependency>
 
   </dependencies>
 
@@ -51,7 +57,7 @@
 	    </execution>
 	  </executions>
 	  <configuration>
-	    <mainClass>uk.co.brotherlogic.mdb.numbers.NumberChecker</mainClass>
+	    <mainClass>uk.co.brotherlogic.mdb.Utils</mainClass>
 	  </configuration>
 	</plugin>
       </plugins>
