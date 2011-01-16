@@ -89,7 +89,7 @@ public class Alarm
    private void playSong(Song s)
    {
       System.err.println("Playing Song " + s.r);
-      String command = "mplayer " + s.r.getRiploc() + "/" + s.getResolveTrack() + "*";
+      String command = "mplayer \"" + s.r.getRiploc() + "/" + s.getResolveTrack() + "*\"";
       try
       {
          System.err.println(command);
