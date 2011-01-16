@@ -54,6 +54,7 @@ public class Alarm
 
    private void getRecords() throws SQLException
    {
+      System.err.print("Getting Records");
       records = new LinkedList<Record>();
       Collection<Integer> recordNumbers = GetRecords.create().getRecordNumbers();
       for (Integer num : recordNumbers)
@@ -72,6 +73,7 @@ public class Alarm
 
    private Song pickSong() throws SQLException
    {
+      System.err.print("Picking Song");
       if (records == null)
          getRecords();
       Record r = records.get(pointer++);
@@ -84,8 +86,9 @@ public class Alarm
       return new Song(r, tracks.get(1));
    }
 
-   public void playSong(Song s)
+   private void playSong(Song s)
    {
+      System.err.println("Playing Song " + s.r);
       String command = "mplayer " + s.r.getRiploc() + "/" + s.getResolveTrack() + "*";
       try
       {
