@@ -108,10 +108,6 @@ public class Alarm
          {
             e.printStackTrace();
          }
-         catch (InterruptedException e)
-         {
-            e.printStackTrace();
-         }
 
    }
 
