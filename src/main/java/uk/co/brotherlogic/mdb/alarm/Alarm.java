@@ -89,6 +89,7 @@ public class Alarm
       String command = "mplayer " + s.r.getRiploc() + "/" + s.getResolveTrack() + "*";
       try
       {
+         System.err.println(command);
          Process p = Runtime.getRuntime().exec(command);
          p.waitFor();
       }
