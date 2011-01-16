@@ -3,6 +3,7 @@ package uk.co.brotherlogic.mdb.alarm;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.sql.SQLException;
 import java.util.Collection;
 import java.util.Collections;
@@ -54,7 +55,6 @@ public class Alarm
 
    private void getRecords() throws SQLException
    {
-      System.err.print("Getting Records");
       records = new LinkedList<Record>();
       Collection<Record> recs = GetRecords.create().getRecords(GetRecords.SHELVED, "CD");
       for (Record r : recs)
@@ -73,7 +73,6 @@ public class Alarm
 
    private Song pickSong() throws SQLException
    {
-      System.err.println("Picking Song");
       if (records == null)
          getRecords();
       Record r = records.get(pointer++);
@@ -88,22 +87,20 @@ public class Alarm
 
    private void playSong(Song s)
    {
-      System.err.println("Playing Song " + s.r);
       String command = "mplayer \"" + s.r.getRiploc() + "/" + s.getResolveTrack() + "*\"";
       try
       {
          System.err.println(command);
          Process p = Runtime.getRuntime().exec(command);
-         p.waitFor();
+         BufferedReader reader = new BufferedReader(new InputStreamReader(p.getInputStream()));
+         for (String line = reader.readLine(); line != null; line = reader.readLine())
+            System.err.println("LINE = " + line);
       }
       catch (IOException e)
       {
          e.printStackTrace();
       }
-      catch (InterruptedException e)
-      {
-         e.printStackTrace();
-      }
+
    }
 
    public void registerSong(Song s) throws SQLException
