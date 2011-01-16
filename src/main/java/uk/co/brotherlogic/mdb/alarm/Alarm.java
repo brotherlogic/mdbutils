@@ -91,6 +91,7 @@ public class Alarm
    {
       String command = "mplayer";
       File toPlay = null;
+      System.err.println(s.r.getAuthor() + " - " + s.r.getTitle() + " [" + s.cdTrack + "]");
       for (File f : new File(s.r.getRiploc()).listFiles())
          if (f.getName().contains(s.getResolveTrack()))
             toPlay = f;
