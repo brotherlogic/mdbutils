@@ -87,11 +87,13 @@ public class Alarm
 
    private void playSong(Song s)
    {
-      String command = "mplayer \"" + s.r.getRiploc() + "/" + s.getResolveTrack() + "*\"";
+      String command = "mplayer";
+      String arg = s.r.getRiploc() + "/" + s.getResolveTrack() + "*\"";
       try
       {
          System.err.println(command);
-         Process p = Runtime.getRuntime().exec(command);
+         Process p = Runtime.getRuntime().exec(command, new String[]
+         { arg });
          BufferedReader reader = new BufferedReader(new InputStreamReader(p.getInputStream()));
          for (String line = reader.readLine(); line != null; line = reader.readLine())
             System.err.println("LINE = " + line);
