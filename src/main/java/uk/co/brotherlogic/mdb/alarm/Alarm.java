@@ -87,14 +87,17 @@ public class Alarm
       return new Song(r, tracks.get(1));
    }
 
-   private void playSong(Song s)
+   private boolean playSong(Song s)
    {
+      boolean played = false;
       String command = "mplayer";
       File toPlay = null;
-      System.err.println(s.r.getAuthor() + " - " + s.r.getTitle() + " [" + s.cdTrack + "]");
-      for (File f : new File(s.r.getRiploc()).listFiles())
-         if (f.getName().contains(s.getResolveTrack()))
-            toPlay = f;
+      System.err.println(s.r.getAuthor() + " - " + s.r.getTitle() + " [" + s.cdTrack + "] = "
+            + s.r.getRiploc());
+      if (new File(s.r.getRiploc()).exists())
+         for (File f : new File(s.r.getRiploc()).listFiles())
+            if (f.getName().contains(s.getResolveTrack()))
+               toPlay = f;
 
       if (toPlay != null)
          try
@@ -106,12 +109,13 @@ public class Alarm
             {
                // Do Nothign
             }
+            played = true;
          }
          catch (IOException e)
          {
             e.printStackTrace();
          }
-
+      return played;
    }
 
    public void registerSong(Song s) throws SQLException
@@ -130,8 +134,8 @@ public class Alarm
          try
          {
             Song song = pickSong();
-            playSong(song);
-            registerSong(song);
+            if (playSong(song))
+               registerSong(song);
          }
          catch (SQLException e)
          {
