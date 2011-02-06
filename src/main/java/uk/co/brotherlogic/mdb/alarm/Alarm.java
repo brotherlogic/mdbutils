@@ -161,7 +161,7 @@ class Song
    
    public String toString()
    {
-	   return cdTrack + ": " + r;
+	   return "SONG " + cdTrack + ": " + r.getRiploc() + " = " + r;
    }
 
    public String getResolveTrack()
