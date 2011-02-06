@@ -63,8 +63,7 @@ public class Alarm
       {
          boolean acceptable = false;
          if ((r.getRiploc() != null) && (r.getRiploc().trim().length() > 0))
-            for (User user : User.getUsers())
-               if (r.getScore(user) >= minScore)
+               if (r.getScore() >= minScore)
                   acceptable = true;
          if (acceptable)
             records.add(r);
@@ -84,6 +83,8 @@ public class Alarm
          tracks.add(i);
       Collections.shuffle(tracks);
 
+      System.err.println(r.getTitle() + " - " + tracks.get(1));
+
       return new Song(r, tracks.get(1));
    }
 
@@ -92,8 +93,7 @@ public class Alarm
       boolean played = false;
       String command = "mplayer";
       File toPlay = null;
-      System.err.println(s.r.getAuthor() + " - " + s.r.getTitle() + " [" + s.cdTrack + "] = "
-            + s.r.getRiploc());
+
       if (new File(s.r.getRiploc()).exists())
          for (File f : new File(s.r.getRiploc()).listFiles())
             if (f.getName().contains(s.getResolveTrack()))
