@@ -83,7 +83,7 @@ public class Alarm
          tracks.add(i);
       Collections.shuffle(tracks);
 
-      System.err.println(r.getTitle() + " - " + tracks.get(1));
+      //System.err.println(r.getTitle() + " - " + tracks.get(1));
 
       return new Song(r, tracks.get(1));
    }
@@ -99,7 +99,7 @@ public class Alarm
             if (f.getName().contains(s.getResolveTrack()))
                toPlay = f;
 
-      if (toPlay != null)
+      if (toPlay != null && toPlay.exists())
          try
          {
             Process p = Runtime.getRuntime().exec(new String[]
@@ -125,7 +125,7 @@ public class Alarm
       int now = (int) (System.currentTimeMillis() / 1000);
       ScrobbleResult result = Track.scrobble(s.r.getFormTrackArtist(s.cdTrack),
             s.r.getFormTrackTitle(s.cdTrack), now, cSession);
-      System.err.println(result);
+      //System.err.println(result);
    }
 
    public void run()
