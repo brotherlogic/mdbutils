@@ -115,6 +115,10 @@ public class Alarm
          {
             e.printStackTrace();
          }
+         else
+         {
+        	 System.err.println("Error playing: " + s);
+         }
       return played;
    }
 
@@ -153,6 +157,11 @@ class Song
    {
       r = rec;
       cdTrack = track;
+   }
+   
+   public String toString()
+   {
+	   return cdTrack + ": " + r;
    }
 
    public String getResolveTrack()
