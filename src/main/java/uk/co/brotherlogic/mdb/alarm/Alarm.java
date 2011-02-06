@@ -117,6 +117,8 @@ public class Alarm
          }
          else
          {
+        	 System.err.println(toPlay);
+        	 System.err.println(s.getResolveTrack());
         	 System.err.println("Error playing: " + s);
          }
       return played;
