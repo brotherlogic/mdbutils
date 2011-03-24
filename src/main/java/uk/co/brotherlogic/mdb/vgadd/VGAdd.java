@@ -20,7 +20,7 @@ public class VGAdd
    public void run(File f) throws IOException, SQLException
    {
       // For testing
-      Connect.setForDevMode();
+     //	 Connect.setForDevMode();
 
       // Read the generic information
       BufferedReader reader = new BufferedReader(new FileReader(f));
@@ -31,6 +31,8 @@ public class VGAdd
 
       for (String line = reader.readLine(); line != null; line = reader.readLine())
       {
+    	  if (line.trim().length() > 0)
+    	  {
          String[] lineElems = line.trim().split("~");
 
          String person = lineElems[0];
@@ -84,6 +86,7 @@ public class VGAdd
          System.out.println(GetRecords.create().getRecords(title + ": " + person).get(0)
                .getFormTrackTitle(1));
       }
+    	  }
 
       // Commit all the additions
 
