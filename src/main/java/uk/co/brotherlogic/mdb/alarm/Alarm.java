@@ -58,7 +58,10 @@ public class Alarm
    private void getRecords() throws SQLException
    {
       records = new LinkedList<Record>();
+      long sTime = System.currentTimeMillis();
       Collection<Record> recs = GetRecords.create().getRecords(GetRecords.SHELVED, "CD");
+      long mTime = System.currentTimeMillis();
+      System.out.println("Records = " + (mTime - sTime));
       for (Record r : recs)
       {
          boolean acceptable = false;
@@ -68,6 +71,7 @@ public class Alarm
          if (acceptable)
             records.add(r);
       }
+      System.out.println("Scores = " + (System.currentTimeMillis() - mTime));
 
       Collections.shuffle(records);
    }
@@ -147,6 +151,14 @@ public class Alarm
          {
             e.printStackTrace();
          }
+   }
+   
+   public static void main(String[] args) throws SQLException
+   {
+	   long sTime = System.currentTimeMillis();
+	   Alarm al = new Alarm(10,1000,500);
+	   Song s = al.pickSong();
+	   System.out.println(System.currentTimeMillis()-sTime);
    }
 }
 
