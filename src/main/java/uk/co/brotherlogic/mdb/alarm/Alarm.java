@@ -14,6 +14,7 @@ import java.util.List;
 import uk.co.brotherlogic.mdb.User;
 import uk.co.brotherlogic.mdb.record.GetRecords;
 import uk.co.brotherlogic.mdb.record.Record;
+import uk.co.brotherlogic.mdb.record.RecordScore;
 import de.umass.lastfm.Authenticator;
 import de.umass.lastfm.Session;
 import de.umass.lastfm.Track;
@@ -60,6 +61,7 @@ public class Alarm
       records = new LinkedList<Record>();
       long sTime = System.currentTimeMillis();
       Collection<Record> recs = GetRecords.create().getRecords(GetRecords.SHELVED, "CD");
+      RecordScore.scoreRecords(recs);
       long mTime = System.currentTimeMillis();
       System.out.println("Records = " + (mTime - sTime));
       for (Record r : recs)
@@ -158,6 +160,7 @@ public class Alarm
 	   long sTime = System.currentTimeMillis();
 	   Alarm al = new Alarm(10,1000,500);
 	   Song s = al.pickSong();
+	   System.out.println(s.r.getAuthor() + " - " + s.r.getTitle());
 	   System.out.println(System.currentTimeMillis()-sTime);
    }
 }

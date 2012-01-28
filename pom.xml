@@ -13,13 +13,13 @@
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
-      <version>4.8.2</version>
+      <version>4.10</version>
       <scope>test</scope>
     </dependency>
 
     <dependency>
       <groupId>uk.co.brotherlogic.mdb</groupId>
-      <version>0.5.53</version>
+      <version>0.5.69</version>
       <artifactId>mdbcore</artifactId>
     </dependency>
     
