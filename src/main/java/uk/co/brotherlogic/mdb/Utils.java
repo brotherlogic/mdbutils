@@ -9,6 +9,8 @@ public class Utils
 {
    public static void main(String[] args) throws Exception
    {
+	   Connect.setForProdMode();
+	   
       if (args[0].equals("alarm"))
       {
          Alarm alrm = new Alarm(8, 30 * 60 * 1000, 10);
