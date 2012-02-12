@@ -63,7 +63,6 @@ public class Alarm
       Collection<Record> recs = GetRecords.create().getRecords(GetRecords.SHELVED, "CD");
       RecordScore.scoreRecords(recs);
       long mTime = System.currentTimeMillis();
-      System.out.println("Records = " + (mTime - sTime));
       for (Record r : recs)
       {
          boolean acceptable = false;
@@ -73,8 +72,7 @@ public class Alarm
          if (acceptable)
             records.add(r);
       }
-      System.out.println("Scores = " + (System.currentTimeMillis() - mTime));
-
+     
       Collections.shuffle(records);
    }
 
