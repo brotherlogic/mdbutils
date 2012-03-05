@@ -11,7 +11,7 @@ import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
-import uk.co.brotherlogic.mdb.User;
+import uk.co.brotherlogic.mdb.Connect;
 import uk.co.brotherlogic.mdb.record.GetRecords;
 import uk.co.brotherlogic.mdb.record.Record;
 import uk.co.brotherlogic.mdb.record.RecordScore;
@@ -22,12 +22,21 @@ import de.umass.lastfm.scrobble.ScrobbleResult;
 
 public class Alarm
 {
+   public static void main(String[] args) throws SQLException
+   {
+      Connect.setForProdMode();
+      Alarm mine = new Alarm(8, 100, 100);
+      mine.getRecords();
+      System.out.println(mine.records.size());
+   }
+
    private final double minScore;
    private final int overallTime;
    private final long startTime;
-   private final int maxLength;
 
+   private final int maxLength;
    List<Record> records;
+
    int pointer = 0;
 
    Session cSession = null;
@@ -59,20 +68,18 @@ public class Alarm
    private void getRecords() throws SQLException
    {
       records = new LinkedList<Record>();
-      long sTime = System.currentTimeMillis();
       Collection<Record> recs = GetRecords.create().getRecords(GetRecords.SHELVED, "CD");
       RecordScore.scoreRecords(recs);
-      long mTime = System.currentTimeMillis();
       for (Record r : recs)
       {
          boolean acceptable = false;
          if ((r.getRiploc() != null) && (r.getRiploc().trim().length() > 0))
-               if (r.getScore() >= minScore)
-                  acceptable = true;
+            if (r.getScore() >= minScore)
+               acceptable = true;
          if (acceptable)
             records.add(r);
       }
-     
+
       Collections.shuffle(records);
    }
 
@@ -87,7 +94,7 @@ public class Alarm
          tracks.add(i);
       Collections.shuffle(tracks);
 
-      //System.err.println(r.getTitle() + " - " + tracks.get(1));
+      // System.err.println(r.getTitle() + " - " + tracks.get(1));
 
       return new Song(r, tracks.get(1));
    }
@@ -103,7 +110,7 @@ public class Alarm
             if (f.getName().contains(s.getResolveTrack()))
                toPlay = f;
 
-      if (toPlay != null && toPlay.exists())
+      if ((toPlay != null) && toPlay.exists())
          try
          {
             Process p = Runtime.getRuntime().exec(new String[]
@@ -119,12 +126,12 @@ public class Alarm
          {
             e.printStackTrace();
          }
-         else
-         {
-        	 System.err.println(toPlay);
-        	 System.err.println(s.getResolveTrack());
-        	 System.err.println("Error playing: " + s);
-         }
+      else
+      {
+         System.err.println(toPlay);
+         System.err.println(s.getResolveTrack());
+         System.err.println("Error playing: " + s);
+      }
       return played;
    }
 
@@ -135,7 +142,7 @@ public class Alarm
       int now = (int) (System.currentTimeMillis() / 1000);
       ScrobbleResult result = Track.scrobble(s.r.getFormTrackArtist(s.cdTrack),
             s.r.getFormTrackTitle(s.cdTrack), now, cSession);
-      //System.err.println(result);
+      // System.err.println(result);
    }
 
    public void run()
@@ -152,15 +159,6 @@ public class Alarm
             e.printStackTrace();
          }
    }
-   
-   public static void main(String[] args) throws SQLException
-   {
-	   long sTime = System.currentTimeMillis();
-	   Alarm al = new Alarm(10,1000,500);
-	   Song s = al.pickSong();
-	   System.out.println(s.r.getAuthor() + " - " + s.r.getTitle());
-	   System.out.println(System.currentTimeMillis()-sTime);
-   }
 }
 
 class Song
@@ -173,11 +171,6 @@ class Song
       r = rec;
       cdTrack = track;
    }
-   
-   public String toString()
-   {
-	   return "SONG " + cdTrack + ": " + r.getRiploc() + " = " + r;
-   }
 
    public String getResolveTrack()
    {
@@ -187,5 +180,11 @@ class Song
          return "0" + cdTrack;
       else
          return "" + cdTrack;
+   }
+
+   @Override
+   public String toString()
+   {
+      return "SONG " + cdTrack + ": " + r.getRiploc() + " = " + r;
    }
 }
