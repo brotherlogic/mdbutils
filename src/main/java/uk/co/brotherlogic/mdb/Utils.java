@@ -3,14 +3,15 @@ package uk.co.brotherlogic.mdb;
 import java.io.File;
 
 import uk.co.brotherlogic.mdb.alarm.Alarm;
+import uk.co.brotherlogic.mdb.scores.PrintScores;
 import uk.co.brotherlogic.mdb.vgadd.VGAdd;
 
 public class Utils
 {
    public static void main(String[] args) throws Exception
    {
-	   Connect.setForProdMode();
-	   
+      // Connect.setForProdMode();
+
       if (args[0].equals("alarm"))
       {
          Alarm alrm = new Alarm(8, 30 * 60 * 1000, 10);
@@ -25,6 +26,15 @@ public class Utils
       {
          VGAdd adder = new VGAdd();
          adder.run(new File(args[1]));
+      }
+      else if (args[0].equals("tidy"))
+      {
+
+      }
+      else if (args[0].equals("printscores"))
+      {
+         PrintScores scores = new PrintScores();
+         scores.printScores(args[1]);
       }
       else
          System.err.println("Unknown: : " + args[0]);
